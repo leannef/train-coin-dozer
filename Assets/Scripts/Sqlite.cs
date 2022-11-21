@@ -2,19 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinDozerController : MonoBehaviour
+public class Sqlite : MonoBehaviour
 {
-    public Transform leftWall;
-    public Transform rightWall;
     // Start is called before the first frame update
     void Start()
     {
         
     }
-    private void SpawenDefaultCoins()
-    {
 
-    }
     // Update is called once per frame
     void Update()
     {
