@@ -13,9 +13,8 @@ GameObject:
   - component: {fileID: 8606528210765540269}
   - component: {fileID: 2387835285458512519}
   - component: {fileID: 885058906299628942}
-  - component: {fileID: 3259957070692938632}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: SouvenirTest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -905690159841262435, guid: 27605ddf58a1b804fad6c4cdc2c3221b, type: 3}
+  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -115,17 +114,3 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.0032115998, y: 0.003213388, z: 0.00081343803}
   m_Center: {x: 0.000009929005, y: 0.00004349776, z: -0.0000009872163}
---- !u!64 &3259957070692938632
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7813881412794272376}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 6240159341419647114, guid: 27605ddf58a1b804fad6c4cdc2c3221b, type: 3}

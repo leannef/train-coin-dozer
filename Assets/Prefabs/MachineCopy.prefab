@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 5282813844523190074}
   - component: {fileID: 2797040861635780878}
   m_Layer: 0
-  m_Name: Machine
+  m_Name: MachineCopy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

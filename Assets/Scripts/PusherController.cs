@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class PusherController : MonoBehaviour
 {
-    public float megaDozerMultiplier =2f;
+    public float distanceMultiplier = 1f;
+    public float speedMultiplier = 1f;
     private Vector3 origin;
     private Rigidbody rigidbody => GetComponent<Rigidbody>();
     // Update is called once per frame
     void Update()
     {
-        Vector3 offset = new Vector3(0, 0, Mathf.Sin(Time.time));
-        rigidbody.MovePosition(origin + offset* megaDozerMultiplier);
+        Vector3 offset = new Vector3(0, 0, Mathf.Sin(Time.time * speedMultiplier ) * distanceMultiplier);
+        rigidbody.MovePosition(origin + offset);
+
     }
 
     void Awake()
