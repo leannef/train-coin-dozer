@@ -9,12 +9,20 @@ public class CoinDozerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
-    private void SpawenDefaultCoins()
+
+
+    public void OnMegaDozer()
     {
 
     }
+
+    public void OnUnlimitedCoins()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
