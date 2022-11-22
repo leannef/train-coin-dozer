@@ -25,7 +25,7 @@ public class Sqlite : MonoBehaviour
             IDataReader dataReader = dbCommandReadValues.ExecuteReader();
             while (dataReader.Read())
             {
-                // The `player id` has index 0,  `goldCount` has the index 1.
+                //The `player id` has index 0,  `goldCount` has the index 1.
                 GameManager.Instance.gold = dataReader.GetInt32(1);
                 Debug.Log(dataReader.GetInt32(1));
                 //GamaManager.instance.lastVisit = dataReader.GetInt32(1);
@@ -34,6 +34,7 @@ public class Sqlite : MonoBehaviour
         else
         {
             CreatePlayerEntry();
+            //TODO: also initalize GameManager.Instance.gold here
         }
 
         Debug.Log("Should always be 1 palyer row: " + RowCount);
@@ -68,6 +69,7 @@ public class Sqlite : MonoBehaviour
         dbCommandInsertValue.ExecuteNonQuery();
     }
 
+    // Rename to ReduceCoin()?
     public void OnSpawnCoin()
     {
         int gold = GameManager.Instance.gold - 1;

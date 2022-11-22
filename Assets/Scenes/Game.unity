@@ -711,6 +711,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 456259992}
+  - component: {fileID: 456259993}
   m_Layer: 5
   m_Name: Coinbar
   m_TagString: Untagged
@@ -741,6 +742,19 @@ RectTransform:
   m_AnchoredPosition: {x: -364.66617, y: 860}
   m_SizeDelta: {x: 267.0677, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &456259993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456259991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca6df01691e4cd4c8a0d49c41f23fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinsLabel: {fileID: 1945630508}
 --- !u!1 &482396372
 GameObject:
   m_ObjectHideFlags: 0
@@ -3965,6 +3979,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1961873834}
   - component: {fileID: 1961873835}
+  - component: {fileID: 1961873837}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4001,7 +4016,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MapMenu: {fileID: 2034781897}
   SouvenirMenu: {fileID: 562740139}
-  HUD: {fileID: 0}
+  HUD: {fileID: 1414764332}
+--- !u!114 &1961873837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961873833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfde328cca2db5a49876d965fcb1a63e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gold: 0
 --- !u!1 &2034781897
 GameObject:
   m_ObjectHideFlags: 0
