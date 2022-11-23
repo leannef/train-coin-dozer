@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public GameState gameState { get; private set; }
     public int gold;
     public DateTime lastVisit;
+    public Sqlite database;
 
     private static GameManager _instance;
     public static GameManager Instance

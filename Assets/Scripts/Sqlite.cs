@@ -68,41 +68,32 @@ public class Sqlite : MonoBehaviour
         dbCommandInsertValue.ExecuteNonQuery();
     }
 
-    public void OnSpawnCoin()
+    public void OnUpdateCoin()
     {
         int gold = GameManager.Instance.gold - 1;
+        //TODO: updtae UI gold display
         IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
         dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + gold;
         dbCommandInsertValue.ExecuteNonQuery();
+        dbConnection.Close();
     }
 
-
-    public void OnSlotCatch()
+    public void OnUpdateSouvenir()
     {
-        int gold = GameManager.Instance.gold + 1;
-        // Insert hits into the table.
-        IDbConnection dbConnection = CreateAndOpenDatabase(); 
+        int gold = GameManager.Instance.gold - 1;
+        //TODO: updtae UI gold display
+        IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        //Add Gold to player profile
-        //TODO: Check item type
         dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + gold;
-        dbCommandInsertValue.ExecuteNonQuery(); 
-
-        // Remember to always close the connection at the end.
-        dbConnection.Close(); 
+        dbCommandInsertValue.ExecuteNonQuery();
+        dbConnection.Close();
     }
 
-    public void RewardPlayer()
+    public void OnUpdatePowerUp()
     {
 
     }
-
-    public void ConsumePowerUpItem()
-    {
-
-    }
-
 
 }
 

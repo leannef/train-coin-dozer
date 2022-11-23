@@ -30,6 +30,7 @@ public class Spawner : MonoBehaviour
     {
         if (maxSouvenir < 5)
         {
+            //Souvenir s = Souvenir.WithShortname();
             Bounds colliderBounds = souvenirSpawner.bounds;
             Vector3 colliderCenter = colliderBounds.center;
             float randomX = Random.Range(colliderCenter.x - colliderBounds.extents.x, colliderCenter.x + colliderBounds.extents.x);

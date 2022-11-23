@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f39990b0feb823c4ca08403f4670d78f, type: 3}
+  m_Name: JapanBear
+  m_EditorClassIdentifier: 
+  shortname: JapanBear
+  appearence: {fileID: 8368773498625147971, guid: 672654e1acb4a054eb6879cc0233c857, type: 3}
+  icon: {fileID: 21300000, guid: 1345c0f7b87d2d14d9ee89951de86f7c, type: 3}
+  country: 0

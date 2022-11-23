@@ -16,6 +16,7 @@ public enum PowerUps
     UnlimitedCoins = 6
 }
 
+// TODO: To be removed
 public enum DozerType
 {
     Normal = 0,
