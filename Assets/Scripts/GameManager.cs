@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -33,6 +31,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        gold = 50;
     }
 
     public void SetGameState(GameState state)
