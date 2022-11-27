@@ -5,7 +5,7 @@ using UnityEngine;
 public class Inventory
 {
     //Initailly Loaded from Opening Application
-    public static int goldCount;
+    public static int goldCount => 50;
     public static Dictionary<Souvenir, int> souvenirtItems;
     public static Dictionary<PowerUp, int> powerupItems;
 

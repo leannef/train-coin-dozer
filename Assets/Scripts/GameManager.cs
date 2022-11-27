@@ -9,8 +9,12 @@ public class GameManager : MonoBehaviour
 {
 
     public event OnStateChangeHandler OnStateChange;
+    public float coinRechargeTimeLeft;
+
+    public float rechargeTime = 60f;
     public GameState gameState { get; private set; }
     public int gold;
+    public const int maxGold = 60;
     public DateTime lastVisit;
     public Sqlite database;
 
@@ -32,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         _instance = this;
         gold = 50;
+        coinRechargeTimeLeft = rechargeTime;
     }
 
     public void SetGameState(GameState state)

@@ -712,6 +712,7 @@ GameObject:
   m_Component:
   - component: {fileID: 456259992}
   - component: {fileID: 456259993}
+  - component: {fileID: 456259994}
   m_Layer: 5
   m_Name: Coinbar
   m_TagString: Untagged
@@ -752,6 +753,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ca6df01691e4cd4c8a0d49c41f23fe5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinTimerLabel: {fileID: 608233249}
+--- !u!114 &456259994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456259991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a37ed7ec8032efd4f971de3545b7404c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   coinsLabel: {fileID: 1945630508}
@@ -979,7 +993,7 @@ GameObject:
   - component: {fileID: 608233250}
   - component: {fileID: 608233249}
   m_Layer: 5
-  m_Name: CoinText
+  m_Name: CoinRecharText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3769,7 +3783,7 @@ GameObject:
   - component: {fileID: 1945630509}
   - component: {fileID: 1945630508}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: CoinAmountText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4038,6 +4052,7 @@ GameObject:
   - component: {fileID: 1961873834}
   - component: {fileID: 1961873835}
   - component: {fileID: 1961873837}
+  - component: {fileID: 1961873838}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4087,8 +4102,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfde328cca2db5a49876d965fcb1a63e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinRechargeTimeLeft: 0
+  rechargeTime: 60
   gold: 0
   database: {fileID: 0}
+--- !u!114 &1961873838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961873833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6887f9f297c51334686784087cc320c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034781897
 GameObject:
   m_ObjectHideFlags: 0
