@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3980,6 +3980,7 @@ GameObject:
   - component: {fileID: 1961873834}
   - component: {fileID: 1961873835}
   - component: {fileID: 1961873837}
+  - component: {fileID: 1961873838}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -4030,6 +4031,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gold: 0
+  sqlite: {fileID: 0}
+--- !u!114 &1961873838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1961873833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34ffcad52e7b7134f9288c4c6a8864bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2034781897
 GameObject:
   m_ObjectHideFlags: 0
@@ -4322,6 +4336,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 54190964, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 218305447196363464, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
       propertyPath: m_Name
       value: CoinMachine
@@ -4369,10 +4387,6 @@ PrefabInstance:
     - target: {fileID: 597926557844787314, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4082755724105828451, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ce1693332133e34bb28913561fe4171, type: 3}

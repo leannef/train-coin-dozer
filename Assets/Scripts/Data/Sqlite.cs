@@ -5,94 +5,131 @@ using UnityEngine;
 using System.Data;
 using Mono.Data.Sqlite;
 using System.IO;
+using Unity.VisualScripting;
+using System.Xml;
 
 public class Sqlite : MonoBehaviour
 {
-    // Use this for initialization
-    void Start()
+    private IDbConnection dbConnection;
+    private string dbPath => "URI=file:" + Application.persistentDataPath + "/PlayerData.sqlite";
+    public void InitializeDatabase()
     {
-        // Read all values from the table.
-        IDbConnection dbConnection = CreateAndOpenDatabase();
+        Debug.Log("Initialize Database");
+        // Open a connection to the database.
+        Debug.Log(Application.persistentDataPath);
+        dbConnection = new SqliteConnection(dbPath);
+        dbConnection.Open();
+        CreateDatabase();
         IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
-
-        dbCommandReadValues.CommandText = "SELECT count(id) FROM PlayerProfile";
-        dbCommandReadValues.CommandType = CommandType.Text;
-        int RowCount = 0;
-        RowCount = Convert.ToInt32(dbCommandReadValues.ExecuteScalar());
+        dbCommandReadValues.CommandText = "SELECT count(*) FROM PlayerProfile";
+        int RowCount = Convert.ToInt32(dbCommandReadValues.ExecuteScalar());
         if (RowCount > 0)
         {
-            dbCommandReadValues.CommandText = "SELECT * FROM PlayerProfile";
-            IDataReader dataReader = dbCommandReadValues.ExecuteReader();
-            while (dataReader.Read())
-            {
-                // The `player id` has index 0,  `goldCount` has the index 1.
-                GameManager.Instance.gold = dataReader.GetInt32(1);
-                Debug.Log(dataReader.GetInt32(1));
-                //GamaManager.instance.lastVisit = dataReader.GetInt32(1);
-            }
+            Debug.Log("player id should always be 1. ");
+            Player.id = RowCount;
+            OnLoadPlayerData();
         }
         else
         {
             CreatePlayerEntry();
         }
-
-        Debug.Log("Should always be 1 palyer row: " + RowCount);
-        // Remember to always close the connection at the end.
         dbConnection.Close();
+
     }
 
-    private IDbConnection CreateAndOpenDatabase()
-    {
-        // Open a connection to the database.
-        string dbUri = "URI=file:" + Application.persistentDataPath + "/PlayerData.sqlite";
-        Debug.Log(Application.persistentDataPath);
-        IDbConnection dbConnection = new SqliteConnection(dbUri);
-        dbConnection.Open();
 
+    private void CreateDatabase()
+    {
         // Create a table for player in the database if it does not exist yet.
         IDbCommand dbCommandCreateTable = dbConnection.CreateCommand();
-        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS PlayerProfile (id INTEGER PRIMARY KEY, goldCount INTEGER(60) DEFAULT 50, lastVisit datatime )";
-        dbCommandCreateTable.ExecuteReader();
-        //var dbcmd : IDbCommand = dbconnection.CreateCommand();
-        //dbcmd.CommandText = "INSERT INTO name (name)  VALUES ('50')";
-        //dbcmd.ExecuteNonQuery();
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS PlayerProfile (id INTEGER PRIMARY KEY, goldCount INTEGER DEFAULT 50, lastVisit datatime )"; 
+        dbCommandCreateTable.ExecuteNonQuery();
 
-        return dbConnection;
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Souvenir(id INTEGER PRIMARY KEY, shortname VARCHAR NOT NULL,  quantity INTEGER, type INTEGER NOT NULL, country INTEGER, souvenirId INTEGER, FOREIGN KEY (souvenirId) REFERENCES PlayerProfile(id))";
+        dbCommandCreateTable.ExecuteNonQuery();
+
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Powerup(id INTEGER PRIMARY KEY, type INTEGER NOT NULL, quantity INTEGER NOT NULL, powerupId INTEGER, FOREIGN KEY (powerupId) REFERENCES PlayerProfile(id))";
+        dbCommandCreateTable.ExecuteNonQuery();
+    }
+
+    public void OnLoadPlayerData()
+    {
+        IDbCommand dbCommandReadValues = dbConnection.CreateCommand();
+        dbCommandReadValues.CommandText = "SELECT goldCount FROM PlayerProfile WHERE id =" + Player.id;
+        Player.gold = Convert.ToInt32(dbCommandReadValues.ExecuteScalar());
+
+        dbCommandReadValues.CommandText = "SELECT Powerup.type, Powerup.quantity FROM PlayerProfile, Powerup WHERE PlayerProfile.id = Powerup.powerupId";
+        IDataReader dataReader = dbCommandReadValues.ExecuteReader();
+        while (dataReader.Read())
+        {
+            PowerUp p = PowerUp.WithType(Convert.ToInt32(dataReader[0]));
+            Player.powerupItems = new Dictionary<PowerUp, int>();
+            Player.powerupItems.Add(p, Convert.ToInt32(dataReader[1]));
+        }   
+        dataReader.Close();
+
+        dbCommandReadValues.CommandText = "SELECT Souvenir.shortname, Souvenir.quantity FROM PlayerProfile, Powerup WHERE PlayerProfile.id = Souvenir.souvenirId";
+        dataReader = dbCommandReadValues.ExecuteReader();
+        while (dataReader.Read())
+        {
+            Souvenir s = Souvenir.WithShortname(Convert.ToString(dataReader[0]));
+            Player.souvenirtItems = new Dictionary<Souvenir, int>();
+            Player.souvenirtItems.Add(s, Convert.ToInt32(dataReader[1]));
+        }
+        dataReader.Close();
     }
 
     private void CreatePlayerEntry()
     {
-        IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = "INSERT INTO PlayerProfile (id, goldCount) VALUES (0, " + 50 + ")"; 
+        dbCommandInsertValue.CommandText = "INSERT INTO PlayerProfile (goldCount) VALUES (50)"; 
         dbCommandInsertValue.ExecuteNonQuery();
+        for (int i = 0; i < 6; i++)
+        {
+            Debug.Log("add powerup entry");
+            dbCommandInsertValue.CommandText = "INSERT INTO Powerup (type, quantity, powerupId) VALUES (" + i + ",0 ,1)";
+            dbCommandInsertValue.ExecuteNonQuery();
+        }
     }
 
     public void OnUpdateCoin()
     {
-        int gold = GameManager.Instance.gold - 1;
         //TODO: updtae UI gold display
-        IDbConnection dbConnection = CreateAndOpenDatabase();
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + gold;
+        dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + Player.gold;
         dbCommandInsertValue.ExecuteNonQuery();
-        dbConnection.Close();
-    }
-
-    public void OnUpdateSouvenir()
-    {
-        int gold = GameManager.Instance.gold - 1;
-        //TODO: updtae UI gold display
-        IDbConnection dbConnection = CreateAndOpenDatabase();
-        IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + gold;
-        dbCommandInsertValue.ExecuteNonQuery();
-        dbConnection.Close();
     }
 
     public void OnUpdatePowerUp()
     {
+        IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
+        foreach (KeyValuePair<PowerUp, int> entry in Player.powerupItems)
+        {
+            int type = (int)entry.Key.type;
+            dbCommandInsertValue.CommandText = "UPDATE Powerup SET quantity = " + entry.Value + "WHERE type=" + type;
+            dbCommandInsertValue.ExecuteNonQuery();
+        }
+    }
 
+    public void OnUpdateSouvenir()
+    {
+        IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
+        foreach (KeyValuePair<Souvenir, int> entry in Player.souvenirtItems)
+        {
+            string shortname = entry.Key.shortname;
+            dbCommandInsertValue.CommandText = "UPDATE Powerup SET quantity = " + entry.Value + "WHERE shortname=" + shortname;
+            dbCommandInsertValue.ExecuteNonQuery();
+        }
+    }
+
+    public void OnUpdatePlayerData()
+    {
+        dbConnection = new SqliteConnection(dbPath);
+        dbConnection.Open();
+        OnUpdateCoin();
+        OnUpdatePowerUp();
+        OnUpdateSouvenir();
+        dbConnection.Close();
     }
 
 }

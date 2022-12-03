@@ -5,9 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PowerUp", menuName = "PowerUp")]
 public class PowerUp : ScriptableObject
 {
-    public string shortname = "";
+    public int type;
     public Sprite icon;
-    public PowerUps type;
 
     public bool isValid
     {
@@ -18,8 +17,23 @@ public class PowerUp : ScriptableObject
         }
     }
 
-    public static PowerUp WithShortname(string shortname)
+    public static PowerUp WithType(int type)
     {
-        return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + shortname);
+        switch (type)
+        {
+            case 0: 
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+            case 1:
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+            case 2:
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+            case 3:
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+            case 4:
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+            case 5:
+                return (PowerUp)Resources.Load("SriptableObjects/PowerUp/" + "");
+        }
+        return null;
     }
 }

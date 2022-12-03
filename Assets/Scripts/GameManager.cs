@@ -11,10 +11,10 @@ public class GameManager : MonoBehaviour
 {
 
     public event OnStateChangeHandler OnStateChange;
+    [System.Obsolete("Use Inventory.gold instead")]
+    public int gold; 
     public GameState gameState { get; private set; }
-    public int gold;
-    public DateTime lastVisit;
-    public Sqlite database;
+    private Sqlite sqlite;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -33,12 +33,25 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
+        if (sqlite == null)
+        {
+            sqlite = this.gameObject.GetComponent<Sqlite>();
+        }
+
+        sqlite.InitializeDatabase();
     }
 
     public void SetGameState(GameState state)
     {
         this.gameState = state;
         OnStateChange();
+    }
+
+    void OnApplicationQuit()
+    {
+        Debug.Log("Application end, update data to database");
+        //sqlite.on
+
     }
 
 }

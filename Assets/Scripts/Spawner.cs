@@ -40,7 +40,8 @@ public class Spawner : MonoBehaviour
 
             GameObject newSouvenir;
             newSouvenir = Instantiate(souvenirTemplate, randomPos, Quaternion.identity);
-            Physics.IgnoreCollision(newSouvenir.GetComponent<Collider>(), souvenirSpawner);
+            Debug.Log(newSouvenir.GetComponent<Collider>());
+            Physics.IgnoreCollision(newSouvenir.GetComponent<BoxCollider>(), souvenirSpawner, true);
             maxSouvenir++;
         }
     }
