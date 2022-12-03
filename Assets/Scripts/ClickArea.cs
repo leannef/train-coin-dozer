@@ -9,7 +9,11 @@ public class ClickArea : MonoBehaviour
 
     private void OnMouseDown()
 	{
-		AddCoinOnUserClicked();
+        if (GameManager.Instance.gold > 0)
+        {
+            AddCoinOnUserClicked();
+            GameManager.Instance.gold--;
+        }
     }
     public void AddCoinOnUserClicked()
 	{

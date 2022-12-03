@@ -483,7 +483,7 @@ GameObject:
   - component: {fileID: 6698470289550218767}
   - component: {fileID: 6698470289550218765}
   - component: {fileID: 6698470289550218764}
-  - component: {fileID: 6698470289550218766}
+  - component: {fileID: 7831369842849208375}
   m_Layer: 0
   m_Name: Pusher
   m_TagString: Untagged
@@ -585,7 +585,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 4, y: 0.39999998, z: 7.5}
   m_Center: {x: 0, y: 0, z: -1.75}
---- !u!114 &6698470289550218766
+--- !u!114 &7831369842849208375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -594,10 +594,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4691507519030759063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80657567b1f0a0a4ca8e5484d8f8d4cb, type: 3}
+  m_Script: {fileID: 11500000, guid: a4e9eb8e7cfcbbc41b391beca7a43b6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  megaDozerMultiplier: 2
 --- !u!1 &4698969719086460784
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -11,10 +9,14 @@ public class GameManager : MonoBehaviour
 {
 
     public event OnStateChangeHandler OnStateChange;
-    [System.Obsolete("Use Inventory.gold instead")]
-    public int gold; 
+    public float coinRechargeTimeLeft;
+
+    public float rechargeTime = 60f;
     public GameState gameState { get; private set; }
-    private Sqlite sqlite;
+    public int gold;
+    public const int maxGold = 60;
+    public DateTime lastVisit;
+    public Sqlite database;
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -33,25 +35,14 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        if (sqlite == null)
-        {
-            sqlite = this.gameObject.GetComponent<Sqlite>();
-        }
-
-        sqlite.InitializeDatabase();
+        gold = 50;
+        coinRechargeTimeLeft = rechargeTime;
     }
 
     public void SetGameState(GameState state)
     {
         this.gameState = state;
         OnStateChange();
-    }
-
-    void OnApplicationQuit()
-    {
-        Debug.Log("Application end, update data to database");
-        //sqlite.on
-
     }
 
 }
