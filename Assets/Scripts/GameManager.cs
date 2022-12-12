@@ -7,7 +7,6 @@ public delegate void OnStateChangeHandler();
 
 public class GameManager : MonoBehaviour
 {
-
     public event OnStateChangeHandler OnStateChange;
     public float coinRechargeTimeLeft;
 
@@ -17,6 +16,7 @@ public class GameManager : MonoBehaviour
     public const int maxGold = 60;
     public DateTime lastVisit;
     public Sqlite database;
+    public Country country => Country.Japan;
 
     private static GameManager _instance;
     public static GameManager Instance

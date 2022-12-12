@@ -4410,6 +4410,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 221133865, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.24
+      objectReference: {fileID: 0}
     - target: {fileID: 218305447196363464, guid: 6ce1693332133e34bb28913561fe4171, type: 3}
       propertyPath: m_Name
       value: CoinMachine
