@@ -12,6 +12,8 @@ public class Sqlite : MonoBehaviour
 {
     private IDbConnection dbConnection;
     private string dbPath => "URI=file:" + Application.persistentDataPath + "/PlayerData.sqlite";
+
+
     public void InitializeDatabase()
     {
         Debug.Log("Initialize Database");
@@ -31,6 +33,7 @@ public class Sqlite : MonoBehaviour
         }
         else
         {
+            Debug.Log("Create Player Entry");
             CreatePlayerEntry();
         }
         dbConnection.Close();
@@ -50,6 +53,9 @@ public class Sqlite : MonoBehaviour
 
         dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS Powerup(id INTEGER PRIMARY KEY, type INTEGER NOT NULL, quantity INTEGER NOT NULL, powerupId INTEGER, FOREIGN KEY (powerupId) REFERENCES PlayerProfile(id))";
         dbCommandCreateTable.ExecuteNonQuery();
+
+        dbCommandCreateTable.CommandText = "CREATE TABLE IF NOT EXISTS TrainStaion(id INTEGER PRIMARY KEY, shortname VARCHAR, country INTEGER, isFinished BOOL NOT NULL, isLocked BOOL NOT NULL, stationId INTEGER, FOREIGN KEY (stationId) REFERENCES PlayerProfile(id))";
+        dbCommandCreateTable.ExecuteNonQuery();
     }
 
     public void OnLoadPlayerData()
@@ -62,13 +68,13 @@ public class Sqlite : MonoBehaviour
         IDataReader dataReader = dbCommandReadValues.ExecuteReader();
         while (dataReader.Read())
         {
-            PowerUp p = PowerUp.WithType(Convert.ToInt32(dataReader[0]));
-            Player.powerupItems = new Dictionary<PowerUp, int>();
-            Player.powerupItems.Add(p, Convert.ToInt32(dataReader[1]));
+            //PowerUp p = PowerUp.WithType(Convert.ToInt32(dataReader[0]));
+            //Player.powerupItems = new Dictionary<PowerUp, int>();
+            //Player.powerupItems.Add(p, Convert.ToInt32(dataReader[1]));
         }   
         dataReader.Close();
 
-        dbCommandReadValues.CommandText = "SELECT Souvenir.shortname, Souvenir.quantity FROM PlayerProfile, Powerup WHERE PlayerProfile.id = Souvenir.souvenirId";
+        dbCommandReadValues.CommandText = "SELECT Souvenir.shortname, Souvenir.quantity FROM PlayerProfile, Souvenir WHERE PlayerProfile.id = Souvenir.souvenirId";
         dataReader = dbCommandReadValues.ExecuteReader();
         while (dataReader.Read())
         {
@@ -77,27 +83,52 @@ public class Sqlite : MonoBehaviour
             Player.souvenirtItems.Add(s, Convert.ToInt32(dataReader[1]));
         }
         dataReader.Close();
+
+        dbCommandReadValues.CommandText = "SELECT TrainStaion.shortname, TrainStaion.isLocked,  TrainStaion.isFinished  FROM PlayerProfile, TrainStaion WHERE PlayerProfile.id = TrainStaion.stationId";
+        dataReader = dbCommandReadValues.ExecuteReader();
+        while (dataReader.Read())
+        {
+            string shortname = Convert.ToString(dataReader[0]);
+            Station s = Station.WithShortname(shortname);
+            s.isFinished = Convert.ToBoolean(dataReader[1]);
+            s.isLocked = Convert.ToBoolean(dataReader[2]);
+            Player.stationDict = new Dictionary<Station, string>();
+            Player.stationDict.Add(s, shortname);
+        }
+        dataReader.Close();
     }
 
     private void CreatePlayerEntry()
     {
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
-        dbCommandInsertValue.CommandText = "INSERT INTO PlayerProfile (goldCount) VALUES (50)"; 
+        dbCommandInsertValue.CommandText = "INSERT INTO TrainStaion (country, shortname, isLocked, isFinished) VALUES (0, 'JapanStation1', 0, 0)"; 
         dbCommandInsertValue.ExecuteNonQuery();
         for (int i = 0; i < 6; i++)
         {
-            Debug.Log("add powerup entry");
             dbCommandInsertValue.CommandText = "INSERT INTO Powerup (type, quantity, powerupId) VALUES (" + i + ",0 ,1)";
             dbCommandInsertValue.ExecuteNonQuery();
         }
+        dbCommandInsertValue.CommandText = "INSERT INTO PlayerProfile (goldCount) VALUES (50)";
+        dbCommandInsertValue.ExecuteNonQuery();
     }
 
-    public void OnUpdateCoin()
+    public void OnUpdatePlayerData()
+    {
+        dbConnection = new SqliteConnection(dbPath);
+        dbConnection.Open();
+        OnUpdatePlayerProfile();
+        OnUpdatePowerUp();
+        OnUpdateSouvenir();
+        OnUpdateStation();
+        dbConnection.Close();
+    }
+    public void OnUpdatePlayerProfile()
     {
         //TODO: updtae UI gold display
         IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
         dbCommandInsertValue.CommandText = "UPDATE PlayerProfile SET goldCount = " + Player.gold;
         dbCommandInsertValue.ExecuteNonQuery();
+
     }
 
     public void OnUpdatePowerUp()
@@ -117,21 +148,24 @@ public class Sqlite : MonoBehaviour
         foreach (KeyValuePair<Souvenir, int> entry in Player.souvenirtItems)
         {
             string shortname = entry.Key.shortname;
-            dbCommandInsertValue.CommandText = "UPDATE Powerup SET quantity = " + entry.Value + "WHERE shortname=" + shortname;
+            int quantity = (int)entry.Value;
+            dbCommandInsertValue.CommandText = "insert or replace into Souvenir (shortname, quantity) values (" + shortname + "," + quantity + ");";
             dbCommandInsertValue.ExecuteNonQuery();
         }
     }
 
-    public void OnUpdatePlayerData()
+    private void OnUpdateStation()
     {
-        dbConnection = new SqliteConnection(dbPath);
-        dbConnection.Open();
-        OnUpdateCoin();
-        OnUpdatePowerUp();
-        OnUpdateSouvenir();
-        dbConnection.Close();
+        IDbCommand dbCommandInsertValue = dbConnection.CreateCommand();
+        foreach (KeyValuePair<Station, string> entry in Player.stationDict)
+        {
+            string shortname = entry.Key.shortname;
+            bool isFinished = entry.Key.isFinished;
+            bool isLocked = entry.Key.isLocked;
+            dbCommandInsertValue.CommandText = "insert or replace into TrainStaion (shortname, isFinished, isLocked) values ("+ shortname +","+ isFinished +"," + isLocked + ");";
+            dbCommandInsertValue.ExecuteNonQuery();
+        }
     }
-
 }
 
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     public DateTime lastVisit;
     public Sqlite database;
     public Country country => Country.Japan;
+    public PopUpManager popupManager; 
 
     private static GameManager _instance;
     public static GameManager Instance
@@ -37,6 +39,19 @@ public class GameManager : MonoBehaviour
         _instance = this;
         gold = 50;
         coinRechargeTimeLeft = rechargeTime;
+        database.InitializeDatabase();
+    }
+
+
+    private void Start()
+    {
+        //foreach (KeyValuePair<Station, string> entry in Player.stationDict)
+        //{
+        //    string shortname = entry.Value;
+        //    Station s = Station.WithShortname(shortname);
+        //    s.isFinished = entry.Key.isFinished;
+        //    s.isLocked = entry.Key.isLocked;
+        //}
     }
 
     public void SetGameState(GameState state)

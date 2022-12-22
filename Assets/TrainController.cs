@@ -32,7 +32,14 @@ public class TrainController : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         Station station = collider.GetComponent<StationController>().station;
-        Debug.Log("In station");
-        isInTrainStation = true;
+        if (!station.isFinished && !station.isLocked)
+        {
+            Debug.Log("In station");
+            isInTrainStation = true;
+            PopUpManager p = GameManager.Instance.popupManager;
+            p.Close(p.MapMenu);
+        }
+
+        
     }
 }

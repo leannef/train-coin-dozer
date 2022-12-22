@@ -18,9 +18,11 @@ public class Player
         get { return _gold; }
         set { _gold = value; }
     }
+
     public static Dictionary<Souvenir, int> souvenirtItems;
     // int => type of PowerUp
     public static Dictionary<PowerUp, int> powerupItems;
+    public static Dictionary<Station, string> stationDict;
 
     public static void GrantGold()
     {

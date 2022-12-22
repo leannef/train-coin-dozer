@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Station", menuName = "Station")]
 public class Station : ScriptableObject
 {
-    public string shortname = "";
+    public string shortname;
     public GameObject appearence;
     public bool isLocked;
     public bool isFinished;

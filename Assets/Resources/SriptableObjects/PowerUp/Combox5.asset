@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60306eb185326674eb0c96a74feb765e, type: 3}
   m_Name: Combox5
   m_EditorClassIdentifier: 
-  shortname: 
-  appearence: {fileID: 0}
+  type: 3
   icon: {fileID: 0}
-  type: 0
