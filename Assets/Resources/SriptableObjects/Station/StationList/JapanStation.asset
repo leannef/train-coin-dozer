@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c39103bccd9694b86e3c25386daa5e, type: 3}
-  m_Name: JapanStation1
+  m_Script: {fileID: 11500000, guid: ec2a76d398d76374bab92c14f2a0dd90, type: 3}
+  m_Name: JapanStation
   m_EditorClassIdentifier: 
-  shortname: JapanStation1
-  appearence: {fileID: 0}
-  isLocked: 0
-  isFinished: 0
-  icon: {fileID: 0}
-  level: 1
-  country: 0
+  stationList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

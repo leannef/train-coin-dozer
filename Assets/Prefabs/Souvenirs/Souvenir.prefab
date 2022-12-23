@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: -7998761795818420185}
   m_Layer: 5
   m_Name: Souvenir
-  m_TagString: Untagged
+  m_TagString: Souvenir
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

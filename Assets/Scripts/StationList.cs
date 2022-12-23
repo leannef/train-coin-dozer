@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Station", menuName = "StationList")]
 public class StationList : ScriptableObject
 {
-    [SerializeField] public List<Souvenir> stationList;
+    [SerializeField] public List<Station> stationList;
     //[SerializeField] public SceneHandle sceneHandle;
     //public bool isUnlocked => IsMapUnlocked();
     public static StationList GetWithCountry(Country country)
@@ -14,7 +14,7 @@ public class StationList : ScriptableObject
         switch (country)
         {
             case Country.Japan:
-                return (StationList)Resources.Load("SriptableObjects/Station/StationList/JapanStations");
+                return (StationList)Resources.Load("SriptableObjects/Station/StationList/JapanStation");
             case Country.Europe:
                 return null;
         }

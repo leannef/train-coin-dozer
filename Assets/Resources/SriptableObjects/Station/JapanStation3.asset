@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97c39103bccd9694b86e3c25386daa5e, type: 3}
-  m_Name: JapanStation1
+  m_Name: JapanStation3
   m_EditorClassIdentifier: 
-  shortname: JapanStation1
+  shortname: JapanStation3
   appearence: {fileID: 0}
   isLocked: 0
   isFinished: 0
   icon: {fileID: 0}
-  level: 1
+  level: 3
   country: 0

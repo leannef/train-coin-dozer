@@ -9,7 +9,7 @@ public class DetectCoin : MonoBehaviour
 
         if (col.CompareTag("coin"))
         {
-            GameManager.Instance.gold += 1;
+            Player.gold += 1;
             Destroy(col.gameObject, 0.5f);
         }
         else

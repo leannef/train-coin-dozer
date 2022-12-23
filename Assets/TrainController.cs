@@ -22,7 +22,7 @@ public class TrainController : MonoBehaviour
     }
     void FixedUpdate()
     {    
-        if(!isInTrainStation && !isFinishedMap)
+        if(!isInTrainStation && !isFinishedMap && GameManager.Instance.gameState==GameState.MainMenu)
         {
             distance += speed * Time.fixedDeltaTime;
             transform.position = trainPath.path.GetPointAtDistance(distance, endOfPathInstruction);
@@ -35,7 +35,10 @@ public class TrainController : MonoBehaviour
         if (!station.isFinished && !station.isLocked)
         {
             Debug.Log("In station");
+            Player.station = station;
             isInTrainStation = true;
+            GameManager.Instance.SetGameState(GameState.Play);
+            GameManager.Instance.popupManager.ThreeDMap.SetActive(false);
             PopUpManager p = GameManager.Instance.popupManager;
             p.Close(p.MapMenu);
         }

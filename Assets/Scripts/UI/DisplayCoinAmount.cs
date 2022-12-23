@@ -7,6 +7,6 @@ public class DisplayCoinAmount : MonoBehaviour
 
     private void Update()
     {
-        coinsLabel.text = GameManager.Instance.gold.ToString();
+        coinsLabel.text = Player.gold.ToString();
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - coin
   - Station
+  - Souvenir
+  - clickarea
   layers:
   - Default
   - TransparentFX

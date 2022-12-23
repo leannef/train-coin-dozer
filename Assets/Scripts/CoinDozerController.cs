@@ -19,6 +19,7 @@ public class CoinDozerController : MonoBehaviour
     Vector3 zeroOffset;
     void Start()
     {
+
         country = GameManager.Instance.country;
         zeroOffset = new Vector3(0.0f, 0.2f, -5.0f);
 
@@ -26,59 +27,66 @@ public class CoinDozerController : MonoBehaviour
         maxOffset = maxOffsetDefault;
 
         curOffset = minOffset;
+
         InvokeRepeating("SpawnSouvenir", 5.0f, 3f);
+
+
     }
-    
 
-	void Update()
-	{
-		if (isPushForward)
-		{
-			curOffset += Time.deltaTime * kSpeedPerSec;
 
-			if (curOffset >= maxOffset)
-			{
-				curOffset = maxOffset;
-				isPushForward = false;
-			}
-		}
-		else
-		{
-			curOffset -= Time.deltaTime * kSpeedPerSec;
+    void Update()
+    {
+        if (GameManager.Instance.gameState == GameState.Play)
+        {
+            if (isPushForward)
+            {
+                curOffset += Time.deltaTime * kSpeedPerSec;
 
-			if (curOffset <= minOffset)
-			{
-				curOffset = minOffset;
-				maxOffset = maxOffsetDefault;
-				isPushForward = true;
-			}
-		}
+                if (curOffset >= maxOffset)
+                {
+                    curOffset = maxOffset;
+                    isPushForward = false;
+                }
+            }
+            else
+            {
+                curOffset -= Time.deltaTime * kSpeedPerSec;
 
-        pusher.GetComponent<Rigidbody>().MovePosition(zeroOffset + new Vector3(0, 0, curOffset));
-	}
+                if (curOffset <= minOffset)
+                {
+                    curOffset = minOffset;
+                    maxOffset = maxOffsetDefault;
+                    isPushForward = true;
+                }
+            }
 
+            pusher.GetComponent<Rigidbody>().MovePosition(zeroOffset + new Vector3(0, 0, curOffset));
+
+        }
+    }
 
     private void SpawnSouvenir()
     {
-        SouvenirList list = SouvenirList.GetWithCountry(country);
-        var rnd = new System.Random();
-        Debug.Log(GameManager.Instance.country);
-        Souvenir template = list.souvenirList[rnd.Next(list.souvenirList.Count)];
-        if (maxSouvenir < 5)
+        if (GameManager.Instance.gameState == GameState.Play)
         {
-            //Souvenir s = Souvenir.WithShortname();
-            Bounds colliderBounds = souvenirSpawner.bounds;
-            Vector3 colliderCenter = colliderBounds.center;
-            float randomX = Random.Range(colliderCenter.x - colliderBounds.extents.x, colliderCenter.x + colliderBounds.extents.x);
-            float randomY = Random.Range(colliderCenter.y - colliderBounds.extents.y, colliderCenter.y + colliderBounds.extents.y);
-            float randomZ = Random.Range(colliderCenter.z - colliderBounds.extents.z, colliderCenter.z + colliderBounds.extents.z);
-            Vector3 randomPos = new Vector3(randomX, randomY, randomZ);
+            SouvenirList list = SouvenirList.GetWithCountry(country);
+            var rnd = new System.Random();
+            Souvenir template = list.souvenirList[rnd.Next(list.souvenirList.Count)];
+            if (maxSouvenir < 5)
+            {
+                //Souvenir s = Souvenir.WithShortname();
+                Bounds colliderBounds = souvenirSpawner.bounds;
+                Vector3 colliderCenter = colliderBounds.center;
+                float randomX = Random.Range(colliderCenter.x - colliderBounds.extents.x, colliderCenter.x + colliderBounds.extents.x);
+                float randomY = Random.Range(colliderCenter.y - colliderBounds.extents.y, colliderCenter.y + colliderBounds.extents.y);
+                float randomZ = Random.Range(colliderCenter.z - colliderBounds.extents.z, colliderCenter.z + colliderBounds.extents.z);
+                Vector3 randomPos = new Vector3(randomX, randomY, randomZ);
 
-            GameObject newSouvenir;
-            newSouvenir = Instantiate(template.appearence, randomPos, Quaternion.identity);
-            Debug.Log(newSouvenir.GetComponent<Collider>());
-            Physics.IgnoreCollision(newSouvenir.GetComponent<BoxCollider>(), souvenirSpawner, true);
-            maxSouvenir++;
+                GameObject newSouvenir;
+                newSouvenir = Instantiate(template.appearence, randomPos, Quaternion.identity);
+                Physics.IgnoreCollision(newSouvenir.GetComponent<BoxCollider>(), souvenirSpawner, true);
+                maxSouvenir++;
+            }
         }
     }
 

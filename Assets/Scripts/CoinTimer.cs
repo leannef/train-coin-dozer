@@ -18,9 +18,9 @@ public class CoinTimer : MonoBehaviour
 		{
 			GameManager.Instance.coinRechargeTimeLeft = GameManager.Instance.rechargeTime;
 
-			if (GameManager.Instance.gold < GameManager.maxGold)
+			if (Player.gold < GameManager.maxGold)
 			{
-				GameManager.Instance.gold++;
+				Player.gold++;
 			}
 		}
 	}

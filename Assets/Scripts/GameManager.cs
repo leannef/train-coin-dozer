@@ -1,9 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-public enum GameState { MainMenu, Pause, Play }
+public enum GameState { Loading, MainMenu, Pause, Play }
 public delegate void OnStateChangeHandler();
 
 public class GameManager : MonoBehaviour
@@ -13,7 +14,6 @@ public class GameManager : MonoBehaviour
 
     public float rechargeTime = 60f;
     public GameState gameState { get; private set; }
-    public int gold;
     public const int maxGold = 60;
     public DateTime lastVisit;
     public Sqlite database;
@@ -37,11 +37,21 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         _instance = this;
-        gold = 50;
         coinRechargeTimeLeft = rechargeTime;
         database.InitializeDatabase();
+        popupManager.loadingText.text = "Journey: Japan !";
+        popupManager.ThreeDMap.SetActive(false);
     }
 
+
+    private void OnEnable()
+    {
+        popupManager.loadingScreen.SetActive(true);
+        popupManager.MapMenu.SetActive(true);
+        popupManager.SouvenirMenu.SetActive(false);
+        popupManager.HUD.SetActive(true);
+        StartCoroutine(WaitAndProceed(2f));       
+    }
 
     private void Start()
     {
@@ -57,7 +67,15 @@ public class GameManager : MonoBehaviour
     public void SetGameState(GameState state)
     {
         this.gameState = state;
-        OnStateChange();
     }
 
+    private IEnumerator WaitAndProceed(float waitTime)
+    {
+
+        yield return new WaitForSeconds(waitTime);
+        SetGameState(GameState.MainMenu);
+        popupManager.loadingScreen.SetActive(false);
+        popupManager.ThreeDMap.SetActive(true);
+
+    }
 }

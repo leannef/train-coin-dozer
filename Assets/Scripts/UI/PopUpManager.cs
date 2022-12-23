@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PopUpManager : MonoBehaviour
@@ -7,13 +8,9 @@ public class PopUpManager : MonoBehaviour
     public GameObject MapMenu;
     public GameObject SouvenirMenu;
     public GameObject HUD;
-
-    void Start()
-    {
-        MapMenu.SetActive(false);
-        SouvenirMenu.SetActive(false);
-        HUD.SetActive(true);
-    }
+    public GameObject loadingScreen;
+    public TextMeshProUGUI loadingText;
+    public GameObject ThreeDMap;
 
     // Update is called once per frame
     void Update()

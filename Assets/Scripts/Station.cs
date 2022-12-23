@@ -11,6 +11,7 @@ public class Station : ScriptableObject
     public bool isLocked;
     public bool isFinished;
     public Sprite icon;
+    public int level;
     public Country country;
 
     public bool isValid

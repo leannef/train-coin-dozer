@@ -9,10 +9,10 @@ public class ClickArea : MonoBehaviour
 
     private void OnMouseDown()
 	{
-        if (GameManager.Instance.gold > 0)
+        if (Player.gold > 0)
         {
             AddCoinOnUserClicked();
-            GameManager.Instance.gold--;
+            Player.gold--;
         }
     }
     public void AddCoinOnUserClicked()
@@ -21,14 +21,17 @@ public class ClickArea : MonoBehaviour
                 then is playercoin > 0 ?*/
 
         RaycastHit hit;
+        Debug.Log(Input.mousePosition);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity))
         {
-            Instantiate(coinPrefab,
-                         new Vector3(hit.point.x, height, hit.point.z),
+            if (hit.collider.gameObject.tag == "clickarea")
+            {
+                Instantiate(coinPrefab,
+                         ray.origin,
                          Quaternion.identity);
-
+            }
             //Reduce coin in the inventory
         }
     }
